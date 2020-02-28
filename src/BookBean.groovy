@@ -1,0 +1,4 @@
+class BookBean {
+    String title
+}
+
