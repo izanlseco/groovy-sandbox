@@ -39,3 +39,19 @@ log = ''
     log += element
 }
 assert log == '9876'
+
+// Ranges are objects
+
+def result = ''
+(5..9).each {element ->
+    result += element
+}
+assert result == '56789'
+
+//these two are the same
+assert 5 in 0..10
+assert (0..10).isCase(5)
+
+def ages = [20, 36, 42, 56]
+def midage = 21..50
+assert ages.grep(midage) == [36, 42]
