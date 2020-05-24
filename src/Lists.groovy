@@ -180,3 +180,37 @@ factorial = listTwo.inject(1) { fac, item ->
     fac * item
 }
 assert factorial == 1 * 1 * 2 * 3
+
+// quicksort with lists
+
+def quicksort(list) {
+    if (list.size() < 2) return list
+    def pivot  = list[list.size().intdiv(2)]
+    def left   = list.findAll { item -> item <  pivot }
+    def middle = list.findAll { item -> item == pivot }
+    def right  = list.findAll { item -> item >  pivot }
+    return quicksort(left) + middle + quicksort(right)
+}
+
+assert quicksort([])                 == []
+assert quicksort([1])                == [1]
+assert quicksort([1,2])              == [1,2]
+assert quicksort([2,1])              == [1,2]
+assert quicksort([3,1,2])            == [1,2,3]
+assert quicksort([3,1,2,2])          == [1,2,2,3]
+assert quicksort([1.0f,'a',10,null]) == [null,1.0f,10,'a']
+assert quicksort('bca')          == 'abc'.toList()
+
+// processing lists of URLs
+
+def urls = [
+       new URL('http', 'myshop.com', 80, 'index.html'),
+       new URL('https', 'myshop.com', 443, 'buynow.html'),
+       new URL('ftp', 'myshop.com', 21, 'downloads')
+]
+
+assert urls
+        .findAll { it.port < 99 }
+        .collect { it.file.toUpperCase() }
+        .sort()
+        .join(', ') == 'DOWNLOADS, INDEX.HTML'
