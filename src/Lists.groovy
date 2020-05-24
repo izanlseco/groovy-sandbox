@@ -37,3 +37,146 @@ assert myList == ['x','y','z']
 
 myList[1..1] = [0,1,2]
 assert myList == ['x', 0, 1, 2, 'z']
+
+// list operators involved in adding and removing items
+
+myList = []
+
+myList += 'a'
+assert myList == ['a']
+
+myList += ['b','c']
+assert  myList == ['a','b','c']
+
+myList = []
+myList << 'a' << 'b'
+assert myList == ['a','b']
+
+assert myList - ['b'] == ['a']
+
+assert myList * 2 == ['a','b','a','b']
+
+// lists taking part in control structures
+
+myList = ['a','b','c']
+
+assert myList.isCase('a')
+assert 'b' in  myList
+
+def candidate = 'c'
+switch(candidate) {
+    case myList : assert true; break
+    default     : assert false
+}
+
+assert ['x','a','z'].grep(myList) == ['a']
+
+myList = []
+if (myList) assert false
+
+// lists can be iterated with a for loop
+def expr = ''
+
+for (i in [1,'*',5]){
+    expr += i
+}
+assert expr == '1*5'
+
+// methods to manipulate list content
+
+assert [1, [2,3]].flatten() == [1,2,3]
+assert [1,2,3].intersect([4,3,1]) == [3,1]
+assert [1,2,3].disjoint([4,5,6])
+
+list = [1,2,3]
+popped = list.pop()
+assert popped == 1
+assert list == [2,3]
+
+assert [1,2].reverse() == [2,1]
+assert [3,1,2].sort() == [1,2,3]
+
+def list = [[1,0],[0,1,2]]
+list = list.sort {a,b -> a[0] <=> b[0]}
+assert list == [[0,1,2],[1,0]]
+
+list = list.sort {item -> item.size()}
+assert list == [[1,0],[0,1,2]]
+
+list = ['a','b','c']
+list.remove(2)
+assert list == ['a','b']
+list.remove('b')
+assert list == ['a']
+
+list = ['a','b','b','c']
+list.removeAll(['b','c'])
+assert list == ['a']
+
+def doubled = [1,2,3].collect { item ->
+    item * 2
+}
+assert doubled == [2,4,6]
+
+def odd = [1,2,3].findAll { item->
+    item % 2 == 1
+}
+assert odd == [1,3]
+
+def x = [1,1,1]
+assert [1] == new HashSet(x).toList()
+assert [1] == x.unique()
+
+def y =[1,null,1]
+assert [1,1] == y.findAll {it != null}
+assert [1,1] == y.grep {it}
+
+// list query, iteration, and accumulation
+
+def listTwo = [1,2,3]
+
+assert listTwo.first() == 1
+assert listTwo.head() == 1
+assert listTwo.tail() == [2,3]
+assert listTwo.last() == 3
+assert listTwo.count(2) == 1
+assert listTwo.max() == 3
+assert listTwo.min() == 1
+
+def even = listTwo.find { item ->
+    item % 2 == 0
+}
+assert even == 2
+
+assert listTwo.every {item -> item < 5 }
+assert listTwo.any {item -> item < 2 }
+
+def store = ''
+listTwo.each {item ->
+    store += item
+}
+assert store == '123'
+
+store = ''
+listTwo.reverseEach { item ->
+    store += item
+}
+assert store == '321'
+
+store = ''
+listTwo.eachWithIndex{ item, index ->
+    store += "$index:$item "
+}
+assert store == '0:1 1:2 2:3 '
+assert listTwo.join('-') == '1-2-3'
+
+result = listTwo.inject(0) { clinks, guests ->
+    clinks + guests
+}
+assert result == 0 + 1 + 2 + 3
+assert listTwo.sum() == 6
+
+factorial = listTwo.inject(1) { fac, item ->
+    fac * item
+}
+assert factorial == 1 * 1 * 2 * 3
