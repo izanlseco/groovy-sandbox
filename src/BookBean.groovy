@@ -1,4 +1,0 @@
-class BookBean {
-    String title
-}
-

@@ -1,3 +1,12 @@
+class Ranges {
+    def x = 0..10
+    def y = 0..<10
+    def z = 0.0..1.0
+    def w = ('a'..'c')
+    def today = new Date()
+    def yesterday = today -1
+}
+
 def ranges = new Ranges()
 
 assert ranges.x.contains(0)
@@ -40,7 +49,7 @@ log = ''
 }
 assert log == '9876'
 
-// Ranges are objects
+/* Ranges are objects */
 
 def result = ''
 (5..9).each {element ->
@@ -48,7 +57,8 @@ def result = ''
 }
 assert result == '56789'
 
-//these two are the same
+/*these two are the same */
+
 assert 5 in 0..10
 assert (0..10).isCase(5)
 

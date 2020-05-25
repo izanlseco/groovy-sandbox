@@ -1,3 +1,9 @@
+import groovy.transform.Immutable
+
+@Immutable class FixedBook {
+    String title
+}
+
 def gina = new FixedBook('Groovy in Action')
 def regina = new FixedBook(title:'Groovy in Action')
 
